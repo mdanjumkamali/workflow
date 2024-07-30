@@ -59,6 +59,7 @@ const Board: React.FC = () => {
 
   const handleDeleteTask = (taskId: string) => {
     dispatch(deleteTaskThunk(taskId));
+    toast.success("Task deleted successfully!");
   };
 
   const handleTaskClick = (task: Task) => {

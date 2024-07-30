@@ -40,6 +40,7 @@ interface SignUpFormData {
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
+  const [isSubmited, setIsSubmited] = useState(false);
   const router = useRouter();
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
@@ -53,11 +54,12 @@ const SignUpPage = () => {
 
   const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
     try {
+      setIsSubmited(true);
       await dispatch(signupThunk(data)).unwrap();
       toast.success("Account created successfully!");
       router.push("/login");
     } catch (error: any) {
-      toast.error(error.message);
+      setIsSubmited(false);
     }
   };
 
@@ -125,7 +127,11 @@ const SignUpPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-button-gradient">
+            <Button
+              type="submit"
+              className="w-full bg-button-gradient"
+              disabled={isSubmited}
+            >
               Sign Up
             </Button>
           </form>

@@ -36,8 +36,9 @@ interface LoginFormData {
   password: string;
 }
 
-const SignUpPage = () => {
+const LoginPage = () => {
   const dispatch = useAppDispatch();
+  const [isSubmited, setIsSubmited] = useState(false);
   const router = useRouter();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -51,11 +52,12 @@ const SignUpPage = () => {
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
+      setIsSubmited(true);
       await dispatch(loginThunk(data)).unwrap();
       router.push("/dashboard");
       toast.success("Login Successfully!");
     } catch (error: any) {
-      toast.error(error.message);
+      setIsSubmited(false);
     }
   };
 
@@ -111,7 +113,11 @@ const SignUpPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-button-gradient">
+            <Button
+              type="submit"
+              className="w-full bg-button-gradient"
+              disabled={isSubmited}
+            >
               Login
             </Button>
           </form>
@@ -127,4 +133,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default LoginPage;
