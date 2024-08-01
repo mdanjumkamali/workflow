@@ -28,6 +28,7 @@ A task management system comprising an API (server) and a web application (clien
 
 - Next.js
 - TypeScript
+- Redux-Toolkit
 - TailwindCSS
 - ShadcnUI
  
